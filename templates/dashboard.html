@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TravelGo | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <div class="navbar">
+    <div><strong>TravelGo</strong></div>
+    <div>
+        {% if session.get('user') %}
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+            <a href="{{ url_for('signup') }}">Sign Up</a>
+        {% endif %}
+    </div>
+</div>
+
+    <h2>Welcome, {{ session['user']['name'] }}</h2>
+
+    <a href="{{ url_for('search') }}">Book Travel</a> |
+    <a href="{{ url_for('logout') }}">Logout</a>
+
+    <h3>Your Bookings</h3>
+
+    {% if bookings %}
+        <ul>
+        {% for b in bookings %}
+<div class="card">
+    <p><span>Mode:</span> {{ b.mode }}</p>
+    <p><span>Route:</span> {{ b.source }} → {{ b.destination }}</p>
+    <p><span>Price:</span> ₹{{ b.price }}</p>
+    <p>
+        <span>Status:</span>
+        {% if b.status == 'CONFIRMED' %}
+            <span class="status-confirmed">CONFIRMED</span>
+        {% else %}
+            <span class="status-cancelled">CANCELLED</span>
+        {% endif %}
+    </p>
+
+    {% if b.status == 'CONFIRMED' %}
+        <a href="{{ url_for('cancel', booking_id=b.booking_id) }}">Cancel Booking</a>
+    {% endif %}
+</div>
+{% endfor %}
+
+        </ul>
+    {% else %}
+        <p>No bookings yet.</p>
+    {% endif %}
+</body>
+</html>

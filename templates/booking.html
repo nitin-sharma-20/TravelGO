@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TravelGo | Booking</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+<body>
+    <h2>Confirm Booking</h2>
+
+    <form method="post" action="{{ url_for('confirm') }}">
+        <p>Mode: {{ mode }}</p>
+        <p>From: {{ source }}</p>
+        <p>To: {{ destination }}</p>
+        <p>Price: ₹{{ price }}</p>
+
+        <input type="hidden" name="mode" value="{{ mode }}">
+        <input type="hidden" name="source" value="{{ source }}">
+        <input type="hidden" name="destination" value="{{ destination }}">
+        <input type="hidden" name="price" value="{{ price }}">
+
+        <button type="submit">Confirm Booking</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,110 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Body */
+body {
+    background: #f4f6f8;
+    color: #333;
+}
+
+/* Navbar */
+.navbar {
+    background: #f7b100;
+    padding: 15px 40px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    font-weight: 600;
+}
+
+/* Container */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+/* Headings */
+h1, h2, h3 {
+    margin-bottom: 20px;
+}
+
+/* Forms */
+form input, form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background: #ff6f00;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e65c00;
+}
+
+/* Links */
+a {
+    color: #0f3cc9;
+    text-decoration: none;
+}
+
+/* Booking cards */
+.card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+.card span {
+    font-weight: bold;
+}
+
+/* Status badges */
+.status-confirmed {
+    color: green;
+    font-weight: bold;
+}
+
+.status-cancelled {
+    color: red;
+    font-weight: bold;
+}
+
+/* Flash messages */
+.flash {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.flash.success { background: #d4edda; }
+.flash.danger  { background: #f8d7da; }
+.flash.info    { background: #d1ecf1; }
+.flash.warning { background: #fff3cd; }
