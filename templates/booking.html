@@ -1,25 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TravelGo | Booking</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends "base.html" %}
 
-</head>
-<body>
-    <h2>Confirm Booking</h2>
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h3 class="mb-3">Confirm Booking</h3>
 
-    <form method="post" action="{{ url_for('confirm') }}">
-        <p>Mode: {{ mode }}</p>
-        <p>From: {{ source }}</p>
-        <p>To: {{ destination }}</p>
-        <p>Price: ₹{{ price }}</p>
+        <p><strong>Mode:</strong> {{ mode }}</p>
+        <p><strong>Provider:</strong> {{ provider }}</p>
+        <p><strong>Route:</strong> {{ source }} → {{ destination }}</p>
+        <p><strong>Price:</strong> ₹{{ price }}</p>
 
-        <input type="hidden" name="mode" value="{{ mode }}">
-        <input type="hidden" name="source" value="{{ source }}">
-        <input type="hidden" name="destination" value="{{ destination }}">
-        <input type="hidden" name="price" value="{{ price }}">
+        <form method="post" action="{{ url_for('confirm') }}">
+            <input type="hidden" name="mode" value="{{ mode }}">
+            <input type="hidden" name="provider" value="{{ provider }}">
+            <input type="hidden" name="source" value="{{ source }}">
+            <input type="hidden" name="destination" value="{{ destination }}">
+            <input type="hidden" name="price" value="{{ price }}">
 
-        <button type="submit">Confirm Booking</button>
-    </form>
-</body>
-</html>
+            <button class="btn btn-success w-100 mt-3">Confirm Booking</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

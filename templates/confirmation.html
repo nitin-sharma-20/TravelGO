@@ -1,20 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TravelGo | Confirmation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends "base.html" %}
 
-</head>
-<body>
-    <h2>Booking Confirmed</h2>
+{% block content %}
 
-    <p>Booking ID: {{ booking.booking_id }}</p>
-    <p>Mode: {{ booking.mode }}</p>
-    <p>Route: {{ booking.source }} → {{ booking.destination }}</p>
-    <p>Price: ₹{{ booking.price }}</p>
-    <p>Status: {{ booking.status }}</p>
-    <p>Time: {{ booking.timestamp }}</p>
+<div class="confirmation-container fade-up">
 
-    <a href="{{ url_for('dashboard') }}">Go to Dashboard</a>
-</body>
-</html>
+    <div class="card confirmation-card mx-auto">
+
+        <div class="card-body text-center p-5">
+
+            <!-- SUCCESS ICON -->
+            <div class="success-icon mb-3">
+                ✅
+            </div>
+
+            <!-- TITLE -->
+            <h2 class="text-success mb-2">Booking Confirmed</h2>
+            <p class="text-muted mb-4">
+                Your trip has been successfully booked
+            </p>
+
+            <!-- SUMMARY -->
+            <div class="confirmation-details text-start mb-4">
+
+                <div class="detail-row">
+                    <span>ID</span>
+                    <strong>#{{ booking.booking_id }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Mode</span>
+                    <strong>{{ booking.mode }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Provider</span>
+                    <strong>{{ booking.provider }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Route</span>
+                    <strong>{{ booking.source }} → {{ booking.destination }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Price</span>
+                    <strong>₹{{ booking.price }}</strong>
+                </div>
+
+                <div class="detail-row">
+                    <span>Status</span>
+                    <span class="badge bg-success">CONFIRMED</span>
+                </div>
+
+            </div>
+
+            <!-- CTA -->
+            <a href="{{ url_for('dashboard') }}"
+               class="btn btn-primary px-5 py-2 rounded-pill">
+                Go to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

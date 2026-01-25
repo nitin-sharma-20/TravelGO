@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h3 class="mb-3">User Profile</h3>
+
+        <p><strong>Name:</strong> {{ user.name }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+
+        <hr>
+
+        <p><strong>Total Bookings:</strong> {{ total_bookings }}</p>
+        <p><strong>Active Bookings:</strong> {{ active_bookings }}</p>
+        <p><strong>Last Booking Time:</strong> {{ last_booking_time }}</p>
+
+        <a href="{{ url_for('dashboard') }}" class="btn btn-primary mt-3">
+            Back to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

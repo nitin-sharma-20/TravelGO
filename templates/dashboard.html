@@ -1,56 +1,91 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TravelGo | Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends "base.html" %}
 
-</head>
-<body>
-    <div class="navbar">
-    <div><strong>TravelGo</strong></div>
-    <div>
-        {% if session.get('user') %}
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Sign Up</a>
-        {% endif %}
+{% block content %}
+
+<div class="dashboard-container fade-up">
+
+    <!-- HEADER -->
+    <div class="dashboard-header mb-5 text-center">
+        <h2 class="mb-1">Your Trips</h2>
+        <p class="text-muted">
+            Manage your bookings and view trip details
+        </p>
     </div>
-</div>
 
-    <h2>Welcome, {{ session['user']['name'] }}</h2>
+    {% if bookings|length == 0 %}
 
-    <a href="{{ url_for('search') }}">Book Travel</a> |
-    <a href="{{ url_for('logout') }}">Logout</a>
+        <!-- EMPTY STATE -->
+        <div class="d-flex justify-content-center">
+            <div class="card empty-state-card text-center p-5">
 
-    <h3>Your Bookings</h3>
+                <div class="empty-icon mb-3">✈️</div>
 
-    {% if bookings %}
-        <ul>
-        {% for b in bookings %}
-<div class="card">
-    <p><span>Mode:</span> {{ b.mode }}</p>
-    <p><span>Route:</span> {{ b.source }} → {{ b.destination }}</p>
-    <p><span>Price:</span> ₹{{ b.price }}</p>
-    <p>
-        <span>Status:</span>
-        {% if b.status == 'CONFIRMED' %}
-            <span class="status-confirmed">CONFIRMED</span>
-        {% else %}
-            <span class="status-cancelled">CANCELLED</span>
-        {% endif %}
-    </p>
+                <h4 class="mb-2">No trips yet</h4>
 
-    {% if b.status == 'CONFIRMED' %}
-        <a href="{{ url_for('cancel', booking_id=b.booking_id) }}">Cancel Booking</a>
-    {% endif %}
-</div>
-{% endfor %}
+                <p class="text-muted mb-4">
+                    You have not booked any trips yet.<br>
+                    Start exploring to plan your next journey.
+                </p>
 
-        </ul>
+                <a href="{{ url_for('index') }}"
+                   class="btn btn-primary px-5 py-2 rounded-pill">
+                    Search Trips
+                </a>
+
+            </div>
+        </div>
+
     {% else %}
-        <p>No bookings yet.</p>
+
+        <!-- BOOKINGS GRID -->
+        <div class="row">
+            {% for b in bookings %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm hover-card">
+
+                    <div class="card-body d-flex flex-column">
+
+                        <!-- ROUTE -->
+                        <h5 class="fw-bold mb-1">
+                            {{ b.source }} → {{ b.destination }}
+                        </h5>
+
+                        <!-- META -->
+                        <p class="text-muted mb-2">
+                            {{ b.mode }} • {{ b.provider }}
+                        </p>
+
+                        <!-- PRICE -->
+                        <h6 class="mb-3">₹{{ b.price }}</h6>
+
+                        <!-- STATUS -->
+                        <span class="badge bg-success align-self-start mb-3">
+                            {{ b.status }}
+                        </span>
+
+                        <!-- ACTIONS -->
+                        <div class="mt-auto d-flex justify-content-between">
+                            <a href="{{ url_for('booking_details', booking_id=b.booking_id) }}"
+                               class="btn btn-outline-primary btn-sm">
+                                View
+                            </a>
+
+                            {% if b.status == 'CONFIRMED' %}
+                            <a href="{{ url_for('cancel', booking_id=b.booking_id) }}"
+                               class="btn btn-outline-danger btn-sm">
+                                Cancel
+                            </a>
+                            {% endif %}
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
     {% endif %}
-</body>
-</html>
+
+</div>
+
+{% endblock %}

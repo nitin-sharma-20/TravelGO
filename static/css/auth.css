@@ -1,0 +1,84 @@
+/* RESET */
+body {
+    margin: 0;
+    background: #f5f7fa;
+}
+
+/* BACKGROUND WRAPPER */
+.auth-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1)),
+    url("https://images.unsplash.com/photo-1501785888041-af3ef285b470");
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* AUTH CARD */
+.auth-card {
+    background: #ffffff;
+    width: 50%;
+    padding: 48px;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
+    opacity: 0.96;
+    
+}
+
+/* LOGO */
+.auth-logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 32px;
+    text-align: center;
+}
+
+/* TITLES */
+.auth-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    text-align: center;
+}
+
+.auth-subtitle {
+    color: #666;
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+/* FORM */
+.auth-form input {
+    height: 52px;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+/* BUTTONS */
+.auth-btn {
+    height: 52px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.social-btn {
+    height: 52px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* ALERT */
+.alert {
+    font-size: 0.95rem;
+}
+
+/* MOBILE */
+@media (max-width: 500px) {
+    .auth-card {
+        width: 90%;
+        padding: 36px 24px;
+    }
+}

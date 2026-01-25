@@ -1,28 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TravelGo | Search</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends "base.html" %}
 
-</head>
-<body>
-    <div class="container">
-    <h2>Search Travel</h2>
+{% block content %}
 
-    <form method="post">
-        <label>Mode:</label>
-        <select name="mode" required>
-            <option value="Bus">Bus</option>
-            <option value="Train">Train</option>
-            <option value="Flight">Flight</option>
-            <option value="Hotel">Hotel</option>
-        </select><br><br>
+<div class="search-page-container fade-up">
 
-        <input type="text" name="source" placeholder="Source" required><br><br>
-        <input type="text" name="destination" placeholder="Destination" required><br><br>
-
-        <button type="submit">Search</button>
-    </form>
+    <!-- HEADER -->
+    <div class="text-center mb-4">
+        <h2 class="mb-1">Search Travel</h2>
+        <p class="text-muted">
+            Find the best travel options for your journey
+        </p>
     </div>
-</body>
-</html>
+
+    <!-- SEARCH CARD -->
+    <div class="d-flex justify-content-center">
+        <div class="card search-card-wide shadow-sm">
+
+            <div class="card-body p-4">
+                <form method="post" class="row g-3">
+
+                    <div class="col-md-4">
+                        <select class="form-select" name="mode" required>
+                            <option value="">Select Mode</option>
+                            <option>Bus</option>
+                            <option>Train</option>
+                            <option>Flight</option>
+                            <option>Hotel</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input class="form-control"
+                               name="source"
+                               placeholder="From"
+                               required>
+                    </div>
+
+                    <div class="col-md-4">
+                        <input class="form-control"
+                               name="destination"
+                               placeholder="To"
+                               required>
+                    </div>
+
+                    <div class="col-12">
+                        <button class="btn btn-primary w-100 py-2 rounded-pill">
+                            Search Trips
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -9,7 +9,63 @@ app.secret_key = "ram ram ji"
 users = []
 bookings = []
 booking_counter = 1
+            
+travel_options = [
+    {
+        "id": 1,
+        "mode": "Flight",
+        "provider": "IndiGo",
+        "source": "Delhi",
+        "destination": "Mumbai",
+        "price": 5200
+    },
+    {
+        "id": 2,
+        "mode": "Train",
+        "provider": "Rajdhani Express",
+        "source": "Delhi",
+        "destination": "Mumbai",
+        "price": 2400
+    },
+    {
+        "id": 3,
+        "mode": "Bus",
+        "provider": "Volvo AC",
+        "source": "Delhi",
+        "destination": "Jaipur",
+        "price": 900
+    },
+    {
+        "id": 4,
+        "mode": "Hotel",
+        "provider": "Taj Palace",
+        "source": "Mumbai",
+        "destination": "Mumbai",
+        "price": 7500
+    }
+]
 
+# ---------------- PRICE CALCULATION LOGIC ----------------
+
+route_distances = {
+    ("Delhi", "Mumbai"): 1400,
+    ("Delhi", "Jaipur"): 280,
+    ("Mumbai", "Goa"): 590,
+}
+
+def calculate_price(mode, source, destination):
+    base_rate = {
+        "Bus": 3,
+        "Train": 2,
+        "Flight": 5,
+        "Hotel": 1500
+    }
+
+    if mode == "Hotel":
+        return base_rate["Hotel"]
+
+    distance = route_distances.get((source, destination), 500)
+    return distance * base_rate.get(mode, 3)
 
 
 @app.route('/')
@@ -32,7 +88,7 @@ def login():
                 "name": user['name'],
                 "email": user['email']
             }
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('index'))
 
         flash("Invalid credentials", "danger")
 
@@ -61,14 +117,29 @@ def signup():
         return redirect(url_for('login'))
 
     return render_template('signup.html')
+    
 
 @app.route('/dashboard')
 def dashboard():
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    if "user" not in session:
+        return redirect(url_for("login"))
 
-    user_bookings = [b for b in bookings if b['user_id'] == session['user']['id']]
-    return render_template('dashboard.html', bookings=user_bookings)
+    print("SESSION USER =", session["user"])
+    print("TYPE =", type(session["user"]))
+    print("ALL BOOKINGS =", bookings)
+
+    email = session["user"]["email"]
+
+    user_bookings = [
+        b for b in bookings
+        if b.get("user_email") == email
+    ]
+
+    return render_template("dashboard.html", bookings=user_bookings)
+
+
+
+
 
 @app.route('/logout')
 def logout():
@@ -76,23 +147,58 @@ def logout():
     flash('You have been logged out!', 'info')
     return redirect(url_for('index'))
 
-
-#main pages
-@app.route('/search', methods=['GET', 'POST'])
-def search():
+@app.route('/profile')
+def profile():
     if 'user' not in session:
         return redirect(url_for('login'))
 
-    if request.method == 'POST':
-        return redirect(url_for(
-            'booking',
-            mode=request.form['mode'],
-            source=request.form['source'],
-            destination=request.form['destination'],
-            price="1500"
-        ))
+    user_id = session['user']['id']
+    user_bookings = [b for b in bookings if b['user_id'] == user_id]
 
-    return render_template('search.html')
+    total_bookings = len(user_bookings)
+    active_bookings = sum(1 for b in user_bookings if b['status'] == 'CONFIRMED')
+    last_booking_time = (
+        max(b['timestamp'] for b in user_bookings)
+        if user_bookings else "N/A"
+    )
+
+    return render_template(
+        'profile.html',
+        user=session['user'],
+        total_bookings=total_bookings,
+        active_bookings=active_bookings,
+        last_booking_time=last_booking_time
+    )
+
+
+
+#main pages
+@app.route('/search', methods=['POST'])
+def search():
+    if 'user' not in session:
+        flash("Please login to search and book trips", "warning")
+        return redirect(url_for('login'))
+
+    mode = request.form['mode']
+    source = request.form['source']
+    destination = request.form['destination']
+
+    results = []
+
+    for option in travel_options:
+        if (option['mode'].lower() == mode.lower()
+            and option['source'].lower() == source.lower()
+            and option['destination'].lower() == destination.lower()):
+
+            price = calculate_price(mode, source, destination)
+
+            opt = option.copy()
+            opt['price'] = price
+            results.append(opt)
+
+    return render_template('results.html', results=results)
+
+
 
 @app.route('/booking')
 def booking():
@@ -104,33 +210,56 @@ def booking():
         mode=request.args.get('mode'),
         source=request.args.get('source'),
         destination=request.args.get('destination'),
-        price=request.args.get('price')
+        price=request.args.get('price'),
+        provider=request.args.get('provider')
     )
+
+@app.route('/booking-details/<int:booking_id>')
+def booking_details(booking_id):
+    if 'user' not in session:
+        return redirect(url_for('login'))
+
+    booking = next(
+        (b for b in bookings
+         if b['booking_id'] == booking_id
+         and b['user_email'] == session['user']['email']),
+        None
+    )
+
+    if not booking:
+        flash("Booking not found", "warning")
+        return redirect(url_for('dashboard'))
+
+    return render_template('booking_details.html', booking=booking)
+
 
 
 
 @app.route('/confirm', methods=['POST'])
 def confirm():
-    global booking_counter
+    booking_id = len(bookings) + 1
 
-    if 'user' not in session:
-        return redirect(url_for('login'))
+    mode = request.form['mode']
+    provider = request.form['provider']
+    source = request.form['source']
+    destination = request.form['destination']
+    price = request.form['price']
 
     booking = {
-        "booking_id": booking_counter,
-        "user_id": session['user']['id'],
-        "mode": request.form['mode'],
-        "source": request.form['source'],
-        "destination": request.form['destination'],
-        "price": request.form['price'],
-        "status": "CONFIRMED",
-        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        "booking_id": booking_id,
+        "user_email": session["user"]["email"],
+        "mode": mode,
+        "provider": provider,
+        "source": source,
+        "destination": destination,
+        "price": price,
+        "status": "CONFIRMED"
     }
 
     bookings.append(booking)
-    booking_counter += 1
 
-    return render_template('confirmation.html', booking=booking)
+    return render_template("confirmation.html", booking=booking)
+
 
 @app.route('/cancel/<int:booking_id>')
 def cancel(booking_id):

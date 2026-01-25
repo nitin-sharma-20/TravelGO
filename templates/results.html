@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="results-container fade-up">
+
+    <!-- HEADER -->
+    <div class="results-header mb-4 text-center">
+        <h2 class="mb-1">Available Trips</h2>
+        <p class="text-muted">
+            Select a trip that suits your journey
+        </p>
+    </div>
+
+    {% if results|length == 0 %}
+
+    <!-- EMPTY STATE -->
+    <div class="d-flex justify-content-center mt-5">
+        <div class="card empty-state-card text-center p-5">
+            <div class="empty-icon mb-3">🔍</div>
+            <h4>No trips found</h4>
+            <p class="text-muted mb-4">
+                Try changing your source, destination, or mode.
+            </p>
+            <a href="{{ url_for('index') }}" class="btn btn-primary rounded-pill px-5">
+                Search Again
+            </a>
+        </div>
+    </div>
+
+    {% else %}
+
+    <!-- RESULTS GRID -->
+    <div class="row justify-content-center">
+        {% for r in results %}
+        <div class="col-md-8 col-lg-6 mb-4">
+            <div class="card hover-card h-100">
+
+                <div class="card-body d-flex justify-content-between align-items-center">
+
+                    <!-- TRIP INFO -->
+                    <div>
+                        <h5 class="fw-bold mb-1">
+                            {{ r.mode }} • {{ r.provider }}
+                        </h5>
+                        <p class="text-muted mb-1">
+                            {{ r.source }} → {{ r.destination }}
+                        </p>
+                        <h6 class="mb-0">₹{{ r.price }}</h6>
+                    </div>
+
+                    <!-- ACTION -->
+                    <form method="post" action="{{ url_for('confirm') }}">
+
+                        <input type="hidden" name="option_id" value="{{ r.id }}">
+                        <input type="hidden" name="provider" value="{{ r.provider }}">
+                        <input type="hidden" name="mode" value="{{ r.mode }}">
+                        <input type="hidden" name="source" value="{{ r.source }}">
+                        <input type="hidden" name="destination" value="{{ r.destination }}">
+                        <input type="hidden" name="price" value="{{ r.price }}">
+
+                        <button type="submit" class="btn btn-outline-primary">
+                            Select
+                        </button>
+
+                    </form>
+
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

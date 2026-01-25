@@ -1,30 +1,60 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>TravelGo | Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% extends "base.html" %}
+{% block content %}
 
+<section class="hero-section">
+    <div class="hero-content">
 
-</head>
-<body>
-    <div class="navbar">
-    <div><strong>TravelGo</strong></div>
-    <div>
-        {% if session.get('user') %}
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('logout') }}">Logout</a>
-        {% else %}
-            <a href="{{ url_for('login') }}">Login</a>
-            <a href="{{ url_for('signup') }}">Sign Up</a>
-        {% endif %}
-    </div>
+        <h1 class="hero-title">
+            Discover. Explore. Go!
+        </h1>
+
+        <p class="hero-subtitle">
+            Explore stunning destinations, unique experiences, and plan your perfect trip today!
+        </p>
+
+        <!-- SEARCH BAR -->
+       <div class="search-card mx-auto">
+    <form method="post" action="{{ url_for('search') }}"
+          class="row g-3 align-items-center">
+
+        <!-- MODE -->
+        <div class="col-md-3">
+            <select class="form-select" name="mode" required>
+                <option>Flight</option>
+                <option>Train</option>
+                <option>Bus</option>
+                <option>Hotel</option>
+            </select>
+        </div>
+
+        <!-- FROM -->
+        <div class="col-md-3">
+            <input class="form-control"
+                   name="source"
+                   placeholder="From"
+                   required>
+        </div>
+
+        <!-- TO -->
+        <div class="col-md-3">
+            <input class="form-control"
+                   name="destination"
+                   placeholder="To"
+                   required>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="col-md-3">
+            <button class="btn btn-dark w-100">
+                Search
+            </button>
+        </div>
+
+    </form>
 </div>
 
-    <h1>Welcome to TravelGo</h1>
-    <p>Your unified travel booking platform</p>
 
-    <a href="{{ url_for('signup') }}">Sign Up</a> |
-    <a href="{{ url_for('login') }}">Login</a>
-</body>
-</html>
+    </div>
+</section>
+
+{% endblock %}

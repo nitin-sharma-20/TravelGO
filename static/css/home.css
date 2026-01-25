@@ -1,0 +1,99 @@
+
+body{
+    min-height: 100vh;
+    background: 
+    linear-gradient(to bottom,
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0)
+    ),
+    url("https://images.unsplash.com/photo-1694783079572-eaeff4bee78b?q=80&w=1374&auto=format&fit=crop");
+    background-size: cover, cover;
+    /* background-position: center, center; */
+    background-repeat: no-repeat, no-repeat;
+
+}
+.dashboard-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.dashboard-header h2 {
+    font-weight: 700;
+}
+
+/* EMPTY STATE */
+.empty-state-card {
+    max-width: 480px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.empty-icon {
+    font-size: 3rem;
+}
+/* RESULTS PAGE */
+.results-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.results-header h2 {
+    font-weight: 700;
+}
+
+/* Reuse empty state */
+.empty-state-card {
+    max-width: 480px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.empty-icon {
+    font-size: 2.5rem;
+}
+/* SEARCH PAGE */
+.search-page-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.search-card-wide {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 18px;
+}
+/* CONFIRMATION PAGE */
+.confirmation-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 20px;
+}
+
+.confirmation-card {
+    max-width: 520px;
+    border-radius: 22px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+}
+
+.success-icon {
+    font-size: 3rem;
+}
+
+.confirmation-details {
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+}
+
+
+
+

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="confirmation-container fade-up">
+
+    <div class="card confirmation-card mx-auto">
+        <div class="card-body p-5">
+
+            <h2 class="mb-4 text-center">Booking Details</h2>
+
+            <div class="detail-row">
+                <span>ID</span>
+                <strong>#{{ booking.booking_id }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Mode</span>
+                <strong>{{ booking.mode }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Provider</span>
+                <strong>{{ booking.provider }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Route</span>
+                <strong>{{ booking.source }} → {{ booking.destination }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Price</span>
+                <strong>₹{{ booking.price }}</strong>
+            </div>
+
+            <div class="detail-row">
+                <span>Status</span>
+                <span class="badge bg-success">{{ booking.status }}</span>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ url_for('dashboard') }}"
+                   class="btn btn-primary rounded-pill px-5">
+                    Back to Dashboard
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
