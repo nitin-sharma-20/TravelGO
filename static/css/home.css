@@ -94,6 +94,16 @@ body{
     font-size: 0.95rem;
 }
 
+/* FOOTER */
+.app-footer {
+    background: #f8f9fa;
+    border-top: 1px solid #eaeaea;
+    margin-top: 60px;
+}
+
+.app-footer small {
+    font-size: 0.85rem;
+}
 
 
 
