@@ -14,10 +14,7 @@ app.secret_key = "ram ram ji"
 
 dynamodb = boto3.resource(
     'dynamodb',
-    region_name='ap-south-1',  
-    aws_access_key_id='TEMP_ACCESS_KEY',
-    aws_secret_access_key='TEMP_SECRET_KEY',
-    aws_session_token='TEMP_SESSION_TOKEN'
+    region_name='ap-south-1'
 )
 
 users_table = dynamodb.Table('TravelGoUsers')
