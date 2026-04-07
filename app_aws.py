@@ -207,5 +207,4 @@ def cancel(booking_id):
 # ---------------- RUN ----------------
 
 if __name__ == '__main__':
-    # Run Gunicorn on port 8000
-    gunicorn --bind 0.0.0.0:8000 app_aws:app
+    app.run(host='0.0.0.0', port=8000)
